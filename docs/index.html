@@ -1,0 +1,1528 @@
+<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Condominiul Personalității</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an engraved printed plate. Tall ruled nav band, a hero on parchment with a hexastyle temple fading in from the right,
+   one framed instrument (the questionnaire plate), the result drawn as a six-floor building, and a ruled atlas of the six types. */
+:root{
+  --paper:#f2efe6; --paper-warm:#ece7d9; --paper-raised:#f7f5ee;
+  --ink:#16140f; --ink-soft:#4d493f; --ink-faint:#8a8576;
+  --rule:#d8d2c2; --rule-strong:#b8b19d;
+  --accent:#b0501f;
+  --night:#16140f; --night-text:#e8e4d8; --night-faint:#a39e8f;
+  --font-display:'EB Garamond','Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  --hatch:repeating-linear-gradient(-45deg,var(--ink) 0 1.4px,transparent 1.4px 5px);
+  --hatch-x:repeating-linear-gradient(-45deg,var(--ink) 0 1.4px,transparent 1.4px 5px),repeating-linear-gradient(45deg,var(--ink) 0 1px,transparent 1px 6px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-display);font-size:1.0625rem;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.08;letter-spacing:-.01em;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--ink);text-decoration-color:var(--rule-strong);text-underline-offset:3px}
+a:hover{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:14px}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);line-height:1.5}
+.eyebrow.dark{color:var(--ink-soft)}
+
+/* printed-plate frame + grain */
+.site-frame{position:fixed;inset:calc(12px + env(safe-area-inset-top,0px)) calc(12px + env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) calc(12px + env(safe-area-inset-left,0px));
+  border:3px double var(--rule-strong);pointer-events:none;z-index:60}
+.grain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:.035;mix-blend-mode:multiply;z-index:9999}
+@media (max-width:600px){.site-frame{inset:calc(8px + env(safe-area-inset-top,0px)) calc(8px + env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) calc(8px + env(safe-area-inset-left,0px))}}
+
+/* nav: tall ruled band */
+.site-header{border-bottom:1px solid var(--rule);margin-top:22px}
+.site-header .wrap{display:flex;align-items:stretch;min-height:72px;border-top:1px solid var(--rule)}
+.brand{display:flex;align-items:center;gap:12px;padding-right:26px;border-right:1px solid var(--rule);text-decoration:none;color:var(--ink)}
+.brand svg{width:28px;height:30px;flex:none}
+.brand b{display:block;font-weight:600;font-size:1.22rem;line-height:1;letter-spacing:.01em}
+.brand small{display:block;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:5px}
+.nav{display:flex;list-style:none;margin:0;padding:0}
+.nav a{display:flex;align-items:center;height:100%;padding:0 22px;font-family:var(--font-mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--ink);text-decoration:none;opacity:.55;border-right:1px solid var(--rule);transition:opacity .18s ease,background .18s ease}
+.nav a:hover,.nav a[aria-current="true"]{opacity:1;background:var(--paper-raised);color:var(--ink)}
+.nav-meta{margin-left:auto;display:flex;align-items:center;padding-left:20px;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase}
+@media (max-width:760px){
+  .site-header{margin-top:14px}
+  .site-header .wrap{flex-wrap:wrap;padding-inline:0}
+  .brand{flex:1 1 100%;border-right:none;border-bottom:1px solid var(--rule);padding:14px 14px}
+  .nav{flex:1 1 100%;display:grid;grid-template-columns:repeat(4,1fr)}
+  .nav a{justify-content:center;padding:14px 4px;font-size:.66rem;letter-spacing:.12em}
+  .nav li:last-child a{border-right:none}
+  .nav-meta{display:none}
+}
+
+/* hero */
+.hero{position:relative;isolation:isolate;border-bottom:1px solid var(--rule);overflow:hidden}
+.hero .wrap{padding-block:84px 72px}
+.hero-art{position:absolute;z-index:-1;right:-4%;top:6%;width:62%;max-width:760px;aspect-ratio:4/3;
+  background:url('temple-bg.png') no-repeat right center/contain;opacity:.9;
+  -webkit-mask-image:linear-gradient(to left,#000 35%,transparent 92%);mask-image:linear-gradient(to left,#000 35%,transparent 92%)}
+.hero h1{font-size:clamp(2.6rem,6.6vw,5.3rem);font-weight:500;max-width:11.5ch;margin:16px 0 22px}
+.hero h1 em{font-style:italic;font-weight:400}
+.lede{font-size:1.18rem;color:var(--ink-soft);max-width:48ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;
+  border:1px solid var(--ink);color:var(--ink);background:var(--paper);padding:.78rem 1.3rem;text-decoration:none;cursor:pointer;border-radius:0;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{border-color:var(--accent);color:var(--accent)}
+.btn.primary:hover{background:var(--accent);color:var(--paper)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;background:var(--paper);color:var(--ink)}
+.btn.quiet{border-color:var(--rule-strong);color:var(--ink-soft)}
+.btn.quiet:hover{background:var(--paper-warm);color:var(--ink)}
+.meta-line{margin-top:26px}
+.cmd{font-family:var(--font-mono);font-size:.86rem;background:var(--paper-raised);border:1px solid var(--rule);box-shadow:4px 4px 0 var(--rule);
+  display:flex;align-items:center;gap:12px;max-width:560px;margin-top:34px;padding:.55rem .6rem .55rem 1rem}
+.cmd label{color:var(--ink-faint);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.cmd input{flex:1;min-width:0;border:none;background:transparent;font:inherit;color:var(--ink);letter-spacing:.08em;text-transform:uppercase;padding:.35rem 0}
+.cmd input::placeholder{color:var(--ink-faint);opacity:.8}
+.cmd input:focus{outline:none}
+.cmd:focus-within{border-color:var(--rule-strong)}
+.cmd .go{font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;background:none;border:1px solid var(--rule);padding:.4rem .7rem;cursor:pointer;color:var(--ink-soft)}
+.cmd .go:hover{color:var(--ink);border-color:var(--ink)}
+.cmd-msg{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);margin-top:10px;min-height:1.2em}
+@media (max-width:760px){
+  .hero .wrap{padding-block:0 52px}
+  .hero-art{position:relative;right:auto;top:auto;width:100%;margin:0;max-width:100%;aspect-ratio:16/10;opacity:.75;background-position:center 30%;background-size:cover;
+    -webkit-mask-image:linear-gradient(to bottom,#000 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 45%,transparent 100%)}
+  .cmd{flex-wrap:wrap}
+  .cmd label{flex:1 1 100%}
+}
+
+/* sections */
+.section{border-bottom:1px solid var(--rule)}
+.section > .wrap{padding-block:76px}
+.section-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 40px;margin-bottom:34px}
+.section-head h2{font-size:clamp(2rem,4.2vw,3.1rem);margin-top:10px;max-width:18ch}
+.section-head p{color:var(--ink-soft);max-width:46ch}
+
+/* questionnaire plate */
+.plate{border:3px double var(--rule-strong);background:var(--paper-raised);box-shadow:4px 4px 0 var(--rule);max-width:820px;position:relative}
+.plate::before,.plate::after{content:"+";position:absolute;font-family:var(--font-mono);font-size:.8rem;color:var(--rule-strong);line-height:1}
+.plate::before{top:-18px;left:-18px}.plate::after{bottom:-18px;right:-18px}
+.plate-bar{display:flex;justify-content:space-between;gap:12px;padding:14px 22px;border-bottom:1px solid var(--rule);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.plate-bar .count{color:var(--ink);font-variant-numeric:tabular-nums}
+.progress{height:3px;background:var(--rule);position:relative}
+.progress span{position:absolute;inset:0 auto 0 0;background:var(--ink);width:0;transition:width .3s ease-out}
+.plate-body{padding:40px 30px 30px}
+.q-kicker{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
+.q-text{font-size:clamp(1.5rem,3.3vw,2.15rem);line-height:1.22;min-height:3.7em;max-width:30ch;text-wrap:balance}
+.q-text.enter{animation:rise .3s ease-out}
+@keyframes rise{from{opacity:.25;transform:translateY(8px)}to{opacity:1;transform:none}}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:30px}
+.scale button{background:var(--paper);border:none;padding:16px 6px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background .15s,color .15s}
+.scale button b{font-family:var(--font-display);font-weight:500;font-size:1.7rem;line-height:1}
+.scale button span{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.scale button:hover{background:var(--paper-warm)}
+.scale button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.scale button[aria-pressed="true"] span{color:var(--paper)}
+.scale-ends{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:8px}
+.plate-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid var(--rule)}
+.linkbtn{background:none;border:none;padding:6px 0;cursor:pointer;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.linkbtn:hover{color:var(--ink)}
+.linkbtn[disabled]{opacity:.35;cursor:default}
+.hint{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.intro-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 30px}
+.intro-list div{background:var(--paper);padding:18px 18px 16px}
+.intro-list b{display:block;font-family:var(--font-display);font-size:2rem;font-weight:500;line-height:1}
+.intro-list span{display:block;font-size:.95rem;color:var(--ink-soft);margin-top:6px}
+.intro-text{max-width:56ch;color:var(--ink-soft)}
+.intro-text strong{color:var(--ink);font-weight:600}
+@media (max-width:600px){
+  .plate-body{padding:28px 18px 22px}
+  .plate-bar,.plate-foot{padding-inline:16px}
+  .scale button{padding:14px 2px 10px}
+  .scale button b{font-size:1.45rem}
+  .scale button span{font-size:.54rem;letter-spacing:.04em}
+  .intro-list{grid-template-columns:1fr}
+  .hint{display:none}
+}
+
+/* variant tabs */
+.tabs{display:flex;border-bottom:1px solid var(--rule)}
+.tabs button{flex:1 1 0;min-width:0;background:none;border:none;border-right:1px solid var(--rule);border-bottom:2px solid transparent;margin-bottom:-1px;
+  padding:14px 18px 12px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px;opacity:.55;transition:opacity .18s ease,background .18s ease}
+.tabs button:last-child{border-right:none}
+.tabs button b{font-family:var(--font-display);font-weight:600;font-size:1.14rem;line-height:1.1}
+.tabs button span{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+.tabs button:hover{opacity:1;background:var(--paper)}
+.tabs button[aria-selected="true"]{opacity:1;border-bottom-color:var(--ink);background:var(--paper)}
+.q-text.short{min-height:0}
+.rank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:26px}
+.rank-list button{background:var(--paper);border:none;text-align:left;padding:14px 16px;cursor:pointer;display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:center;
+  font-size:1.05rem;line-height:1.35;transition:background .15s,color .15s}
+.rank-list button i{font-style:normal;font-family:var(--font-mono);font-size:.72rem;width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--rule-strong);color:var(--ink-faint)}
+.rank-list button:hover{background:var(--paper-warm)}
+.rank-list button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.rank-list button[aria-pressed="true"] i{border-color:var(--paper);color:var(--paper);font-size:.9rem;font-weight:500}
+.rank-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}
+.rank-status{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.rank-foot div{display:flex;align-items:center;gap:16px}
+@media (max-width:600px){
+  .rank-list{grid-template-columns:1fr}
+  .tabs button{padding:12px 12px 10px}
+  .tabs button b{font-size:1rem}
+}
+
+/* result */
+.example-flag{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border:1px dashed var(--rule-strong);padding:12px 16px;margin-bottom:28px;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.result-top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;align-items:start}
+.verdict h2{font-size:clamp(2.3rem,5vw,3.8rem)}
+.verdict .phase-line{font-size:1.5rem;font-style:italic;color:var(--ink-soft);margin-top:8px}
+.verdict .note{margin-top:18px;color:var(--ink-soft);max-width:48ch}
+.code-box{border:3px double var(--rule-strong);background:var(--paper-raised);margin-top:26px;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;max-width:460px}
+.code-box .code{font-family:var(--font-mono);font-size:1.02rem;letter-spacing:.12em;font-variant-numeric:tabular-nums;user-select:all}
+.code-box .code::after{content:"▮";color:var(--accent);margin-left:4px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.code-box .lbl{flex:1 1 100%;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.action-msg{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);margin-top:12px;min-height:1.2em}
+
+/* the building */
+.building{min-width:0}
+.pediment{display:block;width:100%;height:auto;color:var(--ink)}
+.floors{border:1px solid var(--rule-strong);border-top:none;background:var(--paper)}
+.floor{display:grid;grid-template-columns:76px minmax(0,1fr) 40px;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid var(--rule)}
+.floor:first-child{border-top:3px double var(--rule-strong)}
+.floor .lvl{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);line-height:1.3}
+.floor .name{display:flex;justify-content:space-between;gap:8px;font-size:1.08rem;line-height:1.2;margin-bottom:5px}
+.floor .tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);align-self:center}
+.floor .track{height:11px;border:1px solid var(--rule-strong);background:var(--paper-raised)}
+.floor .fill{height:100%;background:var(--hatch);border-right:1px solid var(--ink);transition:width .5s ease-out}
+.floor.is-base .fill{background:var(--hatch-x)}
+.floor.is-base{background:var(--paper-warm)}
+.floor .val{font-family:var(--font-mono);font-size:.82rem;text-align:right;font-variant-numeric:tabular-nums}
+.ground{height:10px;border:1px solid var(--rule-strong);border-top:none;background:var(--hatch);opacity:.5}
+.building-cap{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:10px}
+
+.profiles{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:56px}
+.profile{background:var(--paper);padding:30px 28px}
+.profile h3{font-size:1.9rem;margin:8px 0 4px}
+.profile .ask{font-style:italic;color:var(--ink-soft);margin-bottom:18px}
+.dl{display:grid;grid-template-columns:118px minmax(0,1fr);gap:9px 16px;margin:0}
+.dl dt{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);padding-top:.38em}
+.dl dd{margin:0}
+.stress{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--rule)}
+.stress li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.stress li b{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:400;padding-top:.4em}
+.sub{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:24px 0 8px}
+.feed{background:var(--paper-raised);border:1px solid var(--rule);padding:14px 16px;margin-top:6px}
+@media (max-width:860px){
+  .result-top{grid-template-columns:1fr;gap:40px}
+  .profiles{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .floor{grid-template-columns:58px minmax(0,1fr) 30px;gap:8px;padding:9px 10px}
+  .profile{padding:24px 18px}
+  .dl{grid-template-columns:1fr;gap:2px}
+  .dl dd{margin-bottom:10px}
+}
+
+/* atlas */
+.atlas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.type{background:var(--paper);padding:26px 24px 20px;display:flex;flex-direction:column;scroll-margin-top:24px}
+.type:target{background:var(--paper-raised)}
+.type .pct{font-family:var(--font-display);font-size:2.6rem;line-height:1;font-weight:500;font-variant-numeric:oldstyle-nums}
+.type .pct small{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-left:8px;vertical-align:middle}
+.type h3{font-size:1.6rem;font-weight:600;margin:14px 0 2px}
+.type .en{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.type .ask{font-style:italic;color:var(--ink-soft);margin:10px 0 14px}
+.type .quick{font-size:.98rem}
+.type .quick div{display:flex;gap:10px;padding:5px 0;border-top:1px solid var(--rule)}
+.type .quick span{flex:0 0 78px;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);padding-top:.35em}
+.type details{margin-top:auto;padding-top:16px}
+.type summary{cursor:pointer;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);list-style:none;display:flex;align-items:center;gap:8px;padding:8px 0}
+.type summary::-webkit-details-marker{display:none}
+.type summary::before{content:"+";font-size:.9rem;width:12px}
+.type details[open] summary::before{content:"–"}
+.type summary:hover{color:var(--ink)}
+.type .more{font-size:.98rem;padding-top:6px}
+.type .more p{margin-top:10px}
+.type .more .stress{margin-top:10px}
+.type .more .stress li{grid-template-columns:48px minmax(0,1fr)}
+@media (max-width:900px){.atlas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.atlas{grid-template-columns:1fr}}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px}
+.about-grid h3{font-size:1.35rem;font-weight:600;margin-bottom:10px}
+.about-grid p{color:var(--ink-soft);max-width:60ch}
+.about-grid p + p{margin-top:12px}
+.about-grid ol{margin:0;padding-left:1.2em;color:var(--ink-soft)}
+.about-grid li{margin-top:6px}
+.section-end{border-top:3px double var(--rule-strong);margin-top:64px}
+@media (max-width:760px){.about-grid{grid-template-columns:1fr;gap:34px}}
+
+/* footer (dark plate) */
+.site-footer{background:var(--night);color:var(--night-text);margin:28px calc(-1 * max(16px, env(safe-area-inset-right,0px))) 0 calc(-1 * max(16px, env(safe-area-inset-left,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.site-footer .wrap{padding-block:36px calc(40px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 28px;
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;color:var(--night-faint)}
+.site-footer a{color:var(--night-text);text-decoration:none}
+.site-footer a:hover{color:var(--accent)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+
+<div class="site-frame" aria-hidden="true"></div>
+<svg class="grain" aria-hidden="true"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#acasa" aria-label="Condominiul, pagina de start">
+      <svg viewBox="0 0 28 30" aria-hidden="true" fill="none" stroke="#16140f" stroke-width="1.3">
+        <path d="M2 9 L14 2 L26 9 Z" fill="#16140f"/>
+        <path d="M1 10.5 H27 M2 13 H26"/>
+        <path d="M5 13 V25 M9.5 13 V25 M14 13 V25 M18.5 13 V25 M23 13 V25"/>
+        <path d="M2 25.5 H26 M0.5 28.5 H27.5"/>
+      </svg>
+      <span><b>Condominiul</b><small>Test PCM • Română</small></span>
+    </a>
+    <ul class="nav">
+      <li><a href="#test" data-nav="test">Test</a></li>
+      <li><a href="#rezultat" data-nav="rezultat">Rezultat</a></li>
+      <li><a href="#atlas" data-nav="atlas">Atlas</a></li>
+      <li><a href="#despre" data-nav="despre">Despre</a></li>
+    </ul>
+    <div class="nav-meta">6 tipuri • 2 teste</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="acasa">
+    <div class="hero-art" role="img" aria-label="Gravură: fațada unui templu doric cu șase coloane"></div>
+    <div class="wrap">
+      <div class="eyebrow dark">ΓΝΩΘΙ ΣΕΑΥΤΟΝ • Cunoaște-te pe tine însuți</div>
+      <h1>Fiecare om e o clădire cu <em>șase etaje.</em></h1>
+      <p class="lede">Modelul Process Communication (PCM) spune că porți în tine toate cele șase tipuri de personalitate, așezate unul peste altul. Parterul e baza ta, felul în care percepi lumea. Etajul unde locuiești acum e faza ta, ce te motivează azi.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#test" data-start="complet">Testul complet</a>
+        <a class="btn" href="#test" data-start="alin">PCM Alin</a>
+      </div>
+      <div class="eyebrow meta-line">Complet: 42 de afirmații, ~6 min • PCM Alin: 18 situații de ordonat, ~8 min • rezultat în PDF</div>
+      <form class="cmd" id="codeForm" autocomplete="off">
+        <label for="codeInput">Ai primit un cod?</label>
+        <input id="codeInput" name="code" placeholder="cod de 13 sau 14 caractere" maxlength="20" spellcheck="false" inputmode="text" aria-describedby="codeMsg">
+        <button class="go" type="submit">Deschide</button>
+      </form>
+      <div class="cmd-msg" id="codeMsg" role="status"></div>
+    </div>
+  </section>
+
+  <section class="section" id="test">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Chestionar • Două variante</div>
+          <h2>Răspunde cum ești, nu cum ai vrea să fii.</h2>
+        </div>
+        <p>Testul complet notează 42 de afirmații de la 1 la 5 și îți dă baza și faza. PCM Alin reia cele 18 situații ale testului original: ordonezi șase reacții la fiecare și afli baza și etajele.</p>
+      </div>
+
+      <div class="plate" id="plate">
+        <div class="tabs" role="tablist" aria-label="Varianta testului">
+          <button type="button" role="tab" id="tab-complet" data-variant="complet" aria-selected="true" aria-controls="plateMain"><b>Testul complet</b><span>42 afirmații • ~6 min</span></button>
+          <button type="button" role="tab" id="tab-alin" data-variant="alin" aria-selected="false" aria-controls="plateMain" tabindex="-1"><b>PCM Alin</b><span>18 situații • ordonezi • ~8 min</span></button>
+        </div>
+        <div id="plateMain" role="tabpanel">
+        <div class="plate-bar"><span id="partLabel">Pregătire</span><span class="count" id="counter">00 / 42</span></div>
+        <div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
+
+        <div id="introView">
+          <div class="plate-body">
+            <p class="intro-text" id="introText"></p>
+            <div class="intro-list" id="introStats"></div>
+            <button class="btn primary" type="button" id="startBtn">Începe</button>
+          </div>
+        </div>
+
+        <div id="questionView" hidden>
+          <div class="plate-body">
+            <div class="q-kicker" id="qKicker">Partea I • De obicei</div>
+            <p class="q-text" id="qText" aria-live="polite"></p>
+            <div id="scaleWrap">
+            <div class="scale" role="group" aria-label="Cât de mult ți se potrivește" id="scale">
+              <button type="button" data-v="1" aria-pressed="false"><b>1</b><span>Deloc</span></button>
+              <button type="button" data-v="2" aria-pressed="false"><b>2</b><span>Puțin</span></button>
+              <button type="button" data-v="3" aria-pressed="false"><b>3</b><span>Parțial</span></button>
+              <button type="button" data-v="4" aria-pressed="false"><b>4</b><span>Mult</span></button>
+              <button type="button" data-v="5" aria-pressed="false"><b>5</b><span>Total</span></button>
+            </div>
+            <div class="scale-ends"><span>Nu sunt eu</span><span>Sunt exact eu</span></div>
+            </div>
+            <div id="rank" hidden>
+              <div class="rank-list" id="rankList" role="group" aria-label="Variantele, în ordinea aleasă de tine"></div>
+              <div class="rank-foot">
+                <span class="rank-status" id="rankStatus" role="status"></span>
+                <div><button class="linkbtn" type="button" id="rankClear">Golește ordinea</button><button class="btn primary" type="button" id="rankNext" disabled>Continuă</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="plate-foot">
+            <button class="linkbtn" type="button" id="backBtn">← Înapoi</button>
+            <span class="hint" id="keyHint">Tastele 1–5 • ← înapoi</span>
+            <button class="linkbtn" type="button" id="resetBtn">Ia-o de la capăt</button>
+          </div>
+        </div>
+
+        <div id="interView" hidden>
+          <div class="plate-body">
+            <div class="q-kicker" id="interKicker">Partea I gata</div>
+            <p class="q-text short">Acum gândește-te doar la ultimele două-trei luni.</p>
+            <p class="intro-text" style="margin-top:16px" id="interText"></p>
+            <div class="cta-row"><button class="btn primary" type="button" id="part2Btn">Începe partea a II-a</button></div>
+          </div>
+        </div>
+
+        <div id="doneView" hidden>
+          <div class="plate-body">
+            <div class="q-kicker" id="doneKicker">Gata</div>
+            <p class="q-text short">Clădirea ta e ridicată.</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#rezultat">Vezi rezultatul</a>
+              <button class="btn quiet" type="button" id="redoBtn">Refă testul</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="rezultat">
+    <div class="wrap">
+      <div class="example-flag" id="exampleFlag">
+        <span>Exemplu de rezultat. Al tău apare aici după test.</span>
+        <a class="linkbtn" href="#test">Fă testul →</a>
+      </div>
+      <div class="result-top">
+        <div class="verdict">
+          <div class="eyebrow" id="resEyebrow">Rezultat • exemplu</div>
+          <h2 id="resBase">Baza: Gânditor</h2>
+          <p class="phase-line" id="resPhase">Faza: Promotor</p>
+          <p class="note" id="resNote"></p>
+          <div class="code-box" id="codeBox">
+            <span class="lbl">Codul rezultatului • îl poate deschide oricine în această pagină</span>
+            <span class="code" id="resCode">—</span>
+            <button class="linkbtn" type="button" id="copyCodeBtn">Copiază codul</button>
+          </div>
+          <div class="actions" id="actions">
+            <button class="btn primary" type="button" id="pdfBtn" hidden>Descarcă PDF</button>
+            <button class="btn" type="button" id="copySumBtn">Copiază rezumatul</button>
+          </div>
+          <div class="action-msg" id="actionMsg" role="status"></div>
+        </div>
+        <div class="building">
+          <svg class="pediment" viewBox="0 0 400 74" aria-hidden="true">
+            <defs><pattern id="ph" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.4" height="5" fill="#16140f"/></pattern></defs>
+            <polygon points="6,70 200,6 394,70" fill="#f7f5ee" stroke="#b8b19d" stroke-width="1"/>
+            <polygon points="40,64 200,16 360,64" fill="url(#ph)" opacity=".28"/>
+            <circle cx="200" cy="46" r="11" fill="#f2efe6" stroke="#16140f" stroke-width="1"/>
+            <circle cx="200" cy="46" r="5" fill="#16140f"/>
+            <line x1="0" y1="72.5" x2="400" y2="72.5" stroke="#b8b19d" stroke-width="3"/>
+          </svg>
+          <div class="floors" id="floors" role="list" aria-label="Etajele tale, de sus în jos"></div>
+          <div class="ground" aria-hidden="true"></div>
+          <p class="building-cap" id="buildingCap">Scor 0–100 pe tip • parterul e baza • ▮ marchează faza</p>
+        </div>
+      </div>
+
+      <div class="profiles">
+        <article class="profile" id="baseProfile"></article>
+        <article class="profile" id="phaseProfile"></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="atlas">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Atlas • Cele șase tipuri</div>
+          <h2>Șase feluri de a citi lumea.</h2>
+        </div>
+        <p>Procentele sunt estimările lui Kahler pentru populația nord-americană, după tipul de bază. Deschide fiecare fișă pentru profilul complet și secvența de stres.</p>
+      </div>
+      <div class="atlas" id="atlasGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="despre" style="border-bottom:none">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Despre • Metodă și limite</div>
+          <h2>Cum e ridicată clădirea.</h2>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div>
+          <h3>Modelul</h3>
+          <p>Process Communication Model a fost dezvoltat de psihologul Taibi Kahler în anii '70. Fiecare om are toate cele șase tipuri, în proporții diferite. Baza se formează devreme și rămâne aceeași toată viața. Faza poate urca de câteva ori pe parcursul vieții și dă nevoia psihologică ce te motivează acum.</p>
+          <p>Sub stres, oamenii trec prin trei grade previzibile. Gradul 1 e un tic de comportament („driverul”), gradul 2 aduce o mască, gradul 3 e disperarea. În PCM, stresul urmează tiparul fazei, nu al bazei.</p>
+          <h3 style="margin-top:28px">Cum calculează testul</h3>
+          <ol>
+            <li>Partea I: 30 de afirmații, câte 5 pe tip, scor 5–25 transformat în 0–100. Ordinea scorurilor dă etajele.</li>
+            <li>Partea a II-a: 12 afirmații, câte 2 pe tip (o nevoie și o reacție la stres). Tipul cu scorul cel mai mare devine faza. La egalitate câștigă etajul mai apropiat de bază.</li>
+            <li>Codul rezultatului conține scorurile și o cifră de control. Cine îl primește vede exact același rezultat.</li>
+          </ol>
+          <h3 style="margin-top:28px">PCM Alin</h3>
+          <p>Reia cele 18 situații din testul original „Structura ta de personalitate”, cu formulările lui. La fiecare situație ordonezi toate cele șase reacții; locurile 1–6 primesc 6, 5, 4, 3, 2 și 1 puncte. Fiecare tip strânge între 18 și 108 puncte, iar totalul e mereu 378. La egalitate rămâne ordinea Gânditor, Perseverent, Armonizator (Empatic), Visător, Rebel, Promotor, ca în original. Variantele apar în ordine aleatorie la fiecare situație.</p>
+          <p>O singură modificare față de original: la situația 9, „să pun oamenii la ease” a devenit „să pun oamenii în largul lor”. PCM Alin nu estimează faza; rezultatul e un profil orientativ al preferințelor declarate.</p>
+        </div>
+        <div>
+          <h3>Ce nu este</h3>
+          <p>Acesta e un test neoficial, cu afirmații scrise de la zero. Nu e inventarul Kahler și nu înlocuiește un profil PCM făcut cu un formator certificat. Process Communication Model® este marcă înregistrată Kahler Communications.</p>
+          <p>Modelul are puțină validare independentă publicată în reviste cu evaluare colegială. Folosește-l ca limbaj pentru comunicare și autocunoaștere, nu ca diagnostic sau pentru decizii de angajare. Procentele din atlas sunt date proprii ale lui Kahler.</p>
+          <h3 style="margin-top:28px">Surse</h3>
+          <p><a href="https://en.wikipedia.org/wiki/Taibi_Kahler" target="_blank" rel="noopener">Taibi Kahler, Wikipedia ↗</a><br>
+          <a href="https://www.kahlercommunications.com" target="_blank" rel="noopener">Kahler Communications ↗</a><br>
+          Kahler, T. (2008). <em>The Process Therapy Model</em>. Taibi Kahler Associates.</p>
+        </div>
+      </div>
+      <div class="section-end"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>Condominiul v1.1 · test neoficial inspirat din PCM · 2026</span>
+    <span>Răspunsurile rămân în browserul tău</span>
+    <a href="https://en.wikipedia.org/wiki/Taibi_Kahler" target="_blank" rel="noopener">Despre Taibi Kahler ↗</a>
+  </div>
+</footer>
+
+<script type="application/json" id="pcm-alin-data">
+{
+ "id": "pcm-alin",
+ "title": "PCM Alin",
+ "originalTitle": "Structura ta de personalitate",
+ "source": "https://claude.ai/public/artifacts/c53a10ca-8b94-43a7-a1ec-60ff315675a9",
+ "note": "Instrument informal de autocunoaștere inspirat de Process Communication Model (Taibi Kahler). Nu este profil oficial certificat. Câmpul idea e o interpretare pentru integrare, nu text original.",
+ "codes": {
+  "T": "G",
+  "Pe": "P",
+  "H": "E",
+  "Im": "V",
+  "Re": "R",
+  "Pr": "M"
+ },
+ "typeNames": {
+  "T": "Gânditor",
+  "Pe": "Perseverent",
+  "H": "Armonizator",
+  "Im": "Visător",
+  "Re": "Rebel",
+  "Pr": "Promotor"
+ },
+ "scoring": {
+  "method": "Utilizatorul ordonează toate cele șase variante; locurile 1–6 primesc 6, 5, 4, 3, 2, 1 puncte, adunate pe codul de tip.",
+  "points": [
+   6,
+   5,
+   4,
+   3,
+   2,
+   1
+  ],
+  "minPerType": 18,
+  "maxPerType": 108,
+  "total": 378,
+  "tieOrder": [
+   "T",
+   "Pe",
+   "H",
+   "Im",
+   "Re",
+   "Pr"
+  ],
+  "minFill": 0.14,
+  "shuffleOptions": true
+ },
+ "changes": [
+  {
+   "item": 9,
+   "code": "H",
+   "from": "caut să creez conexiuni și să pun oamenii la ease.",
+   "to": "caut să creez conexiuni și să pun oamenii în largul lor.",
+   "why": "Exprimarea „la ease” e un anglicism scăpat în original."
+  }
+ ],
+ "items": [
+  {
+   "q": "La un prânz în echipă, tind să…",
+   "idea": "Preferința spontană într-o alegere socială cotidiană.",
+   "options": {
+    "T": "analizez rapid opțiunile din perspectivă cost-beneficiu.",
+    "Pe": "aleg locul despre care știu că respectă niște standarde clare.",
+    "H": "mă asigur întâi că toată lumea e mulțumită de alegere.",
+    "Im": "prefer să mă retrag puțin înainte să decid ceva.",
+    "Re": "propun ceva neașteptat, doar ca să schimbăm rutina.",
+    "Pr": "propun rapid o soluție și trecem mai departe."
+   }
+  },
+  {
+   "q": "Când primesc o sarcină nouă la muncă…",
+   "idea": "Modul de pornire într-o sarcină nouă.",
+   "options": {
+    "T": "cer date clare și un plan structurat.",
+    "Pe": "verific dacă se aliniază cu valorile echipei.",
+    "H": "mă gândesc cum va afecta relațiile din echipă.",
+    "Im": "am nevoie de timp singur ca să o procesez.",
+    "Re": "caut o abordare creativă, ieșită din tipare.",
+    "Pr": "încep imediat și învăț din mers."
+   }
+  },
+  {
+   "q": "Într-o discuție în contradictoriu…",
+   "idea": "Stilul de gestionare a dezacordului.",
+   "options": {
+    "T": "prezint argumente logice și fapte concrete.",
+    "Pe": "îmi exprim ferm convingerile.",
+    "H": "caut să înțeleg ce simt ceilalți implicați.",
+    "Im": "prefer să ascult, nu să mă impun.",
+    "Re": "pot reacționa impulsiv, uneori cu sarcasm.",
+    "Pr": "caut rapid un compromis practic, funcțional."
+   }
+  },
+  {
+   "q": "Timpul liber ideal pentru mine e…",
+   "idea": "Activitățile care atrag și reîncarcă persoana.",
+   "options": {
+    "T": "să citesc sau să învăț ceva nou, structurat.",
+    "Pe": "o activitate cu sens, aliniată cu ce cred eu.",
+    "H": "timp cu familia sau prietenii apropiați.",
+    "Im": "liniște, singur, cu gândurile mele.",
+    "Re": "ceva distractiv și spontan, fără plan.",
+    "Pr": "o activitate cu adrenalină sau provocare."
+   }
+  },
+  {
+   "q": "Sub stres, tind să…",
+   "idea": "Reacțiile negative declarate sub stres.",
+   "options": {
+    "T": "devin excesiv de rigid și critic cu detaliile.",
+    "Pe": "devin suspicios și caut vinovați.",
+    "H": "mă simt neapreciat și caut validare.",
+    "Im": "mă retrag și mai mult, evit contactul.",
+    "Re": "devin negativist, dau vina pe alții.",
+    "Pr": "forțez lucrurile să se întâmple, chiar manipulativ."
+   }
+  },
+  {
+   "q": "Colegii m-ar descrie cel mai probabil ca fiind…",
+   "idea": "Imaginea despre sine prin perspectiva presupusă a colegilor.",
+   "options": {
+    "T": "organizat și competent.",
+    "Pe": "dedicat și cu principii solide.",
+    "H": "cald și grijuliu.",
+    "Im": "calm și cu o lume interioară bogată.",
+    "Re": "amuzant și plin de idei neconvenționale.",
+    "Pr": "adaptabil și convingător."
+   }
+  },
+  {
+   "q": "Când iau o decizie importantă…",
+   "idea": "Criteriile și ritmul deciziilor importante.",
+   "options": {
+    "T": "fac o listă cu avantaje și dezavantaje.",
+    "Pe": "mă ghidez după ce cred eu că e corect.",
+    "H": "întreb oamenii apropiați ce simt despre asta.",
+    "Im": "am nevoie de mult timp singur să cântăresc.",
+    "Re": "merg pe instinct și decid repede.",
+    "Pr": "evaluez rapid ce oportunitate îmi aduce cel mai mult."
+   }
+  },
+  {
+   "q": "Ce mă motivează cel mai mult la muncă…",
+   "idea": "Sursele de motivație la muncă.",
+   "options": {
+    "T": "recunoașterea competenței mele profesionale.",
+    "Pe": "să simt că munca mea are sens și valoare.",
+    "H": "relațiile bune cu colegii.",
+    "Im": "spațiul și timpul să lucrez în ritmul meu.",
+    "Re": "distracția și varietatea din activitate.",
+    "Pr": "provocarea și rezultate vizibile, rapide."
+   }
+  },
+  {
+   "q": "Într-un grup nou de persoane…",
+   "idea": "Modul de intrare într-un grup nou.",
+   "options": {
+    "T": "observ și analizez dinamica înainte să mă implic.",
+    "Pe": "îmi exprim opiniile dacă mi se cer.",
+    "H": "caut să creez conexiuni și să pun oamenii în largul lor.",
+    "Im": "rămân retras până mă simt confortabil.",
+    "Re": "glumesc și atrag atenția prin umor.",
+    "Pr": "preiau inițiativa și conduc conversația."
+   }
+  },
+  {
+   "q": "Cum reacționez la o critică…",
+   "idea": "Procesarea criticii.",
+   "options": {
+    "T": "o analizez obiectiv, verific dacă e întemeiată.",
+    "Pe": "o resimt personal dacă contrazice valorile mele.",
+    "H": "mă afectează emoțional, mai ales de la cineva apropiat.",
+    "Im": "o procesez intern, în tăcere.",
+    "Re": "reacționez defensiv sau cu sarcasm.",
+    "Pr": "o resping repede și trec mai departe."
+   }
+  },
+  {
+   "q": "Stilul meu de comunicare preferat e…",
+   "idea": "Preferința explicită de comunicare.",
+   "options": {
+    "T": "clar, structurat, bazat pe fapte.",
+    "Pe": "convingător, cu accent pe valori.",
+    "H": "cald, personal, plin de empatie.",
+    "Im": "rezervat, aștept să fiu întrebat.",
+    "Re": "energic, spontan, plin de umor.",
+    "Pr": "direct la subiect, orientat spre acțiune."
+   }
+  },
+  {
+   "q": "Ce apreciez cel mai mult la ceilalți…",
+   "idea": "Calitățile valorizate la ceilalți.",
+   "options": {
+    "T": "competența și claritatea.",
+    "Pe": "integritatea și devotamentul.",
+    "H": "sinceritatea și căldura sufletească.",
+    "Im": "respectul pentru spațiul personal.",
+    "Re": "spontaneitatea și simțul umorului.",
+    "Pr": "îndrăzneala și capacitatea de a acționa."
+   }
+  },
+  {
+   "q": "La un proiect de grup, rolul meu natural e…",
+   "idea": "Rolul preferat în colaborare.",
+   "options": {
+    "T": "coordonatorul care organizează planul.",
+    "Pe": "cel care păstrează standardele înalte.",
+    "H": "cel care menține moralul echipei.",
+    "Im": "cel care lucrează bine independent, pe bucăți.",
+    "Re": "cel care aduce idei neconvenționale.",
+    "Pr": "cel care rezolvă crizele și mișcă lucrurile din loc."
+   }
+  },
+  {
+   "q": "Ce mă enervează cel mai tare…",
+   "idea": "Factorii de frustrare.",
+   "options": {
+    "T": "incompetența sau lipsa de logică.",
+    "Pe": "lipsa de principii sau minciuna.",
+    "H": "conflictul și lipsa de considerație.",
+    "Im": "agitația și presiunea de a socializa constant.",
+    "Re": "rutina și regulile excesive.",
+    "Pr": "lentoarea și lipsa de acțiune."
+   }
+  },
+  {
+   "q": "Cum abordez o problemă complexă…",
+   "idea": "Strategia de rezolvare a problemelor complexe.",
+   "options": {
+    "T": "o descompun logic, pas cu pas.",
+    "Pe": "mă gândesc ce e corect de făcut.",
+    "H": "caut părerea și implicarea celor din jur.",
+    "Im": "am nevoie de timp de gândire, izolat.",
+    "Re": "încerc mai multe variante rapid, prin încercare-eroare.",
+    "Pr": "acționez direct și ajustez din mers."
+   }
+  },
+  {
+   "q": "Felul în care îmi exprim emoțiile…",
+   "idea": "Modul declarat de exprimare a emoțiilor.",
+   "options": {
+    "T": "rar — prefer să rămân neutru.",
+    "Pe": "intens, mai ales legat de ce cred că e drept.",
+    "H": "deschis — arăt ușor ce simt.",
+    "Im": "foarte rar, țin totul intern.",
+    "Re": "exploziv, dar trece repede.",
+    "Pr": "controlat, folosesc emoția strategic."
+   }
+  },
+  {
+   "q": "Ce tip de apreciere mă bucură cel mai mult…",
+   "idea": "Forma de recunoaștere preferată.",
+   "options": {
+    "T": "„Ai făcut o treabă foarte bine gândită și precisă.”",
+    "Pe": "„Apreciez integritatea și dedicarea ta.”",
+    "H": "„Ești o persoană minunată și de încredere.”",
+    "Im": "„Munca ta independentă a fost impecabilă.”",
+    "Re": "„A fost super distractiv să lucrez cu tine!”",
+    "Pr": "„Ai reușit să faci ce alții credeau imposibil.”"
+   }
+  },
+  {
+   "q": "La final de zi grea, am nevoie de…",
+   "idea": "Nevoile de recuperare după efort.",
+   "options": {
+    "T": "timp să organizez și să înțeleg ce s-a întâmplat.",
+    "Pe": "recunoaștere pentru eforturile depuse corect.",
+    "H": "cineva care să mă asculte și să mă susțină emoțional.",
+    "Im": "liniște totală și spațiu doar al meu.",
+    "Re": "joacă, distracție, ceva care să mă relaxeze.",
+    "Pr": "o nouă provocare care să-mi ocupe energia."
+   }
+  }
+ ]
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* ---------- data ---------- */
+const ORDER = ["E","G","P","V","R","M"];
+const TYPES = {
+  E:{slug:"empatic",name:"Empatic",en:"Harmonizer",pct:30,ask:"Merit iubirea celorlalți?",
+     perceptie:"Emoții: simte înainte să judece",
+     forte:"Compasiune, sensibilitate, căldură",
+     nevoi:"Recunoaștere ca persoană și confort senzorial (un loc plăcut, oameni dragi)",
+     canal:"Nutritiv: ton cald, grijuliu, personal",
+     stil:"Binevoitor: sprijin și atenție la om",
+     mediu:"Grup: oameni apropiați, atmosferă bună",
+     comunicare:"Începe cu omul, apoi cu sarcina. Spune-i concret ce apreciezi la el și întreabă-l cum se simte.",
+     hrana:"Timp cu oamenii dragi, gesturi de afecțiune, un spațiu frumos: muzică, lumină caldă, mâncare bună.",
+     stres:["„Fă-le pe plac celorlalți”: spune da la tot, se adaptează prea mult, nu-și cere nevoile.",
+            "Face greșeli din neatenție, se critică singur, pare că invită critica. Mască: Victima.",
+            "Se simte respins și nedorit."]},
+  G:{slug:"ganditor",name:"Gânditor",en:"Thinker",pct:25,ask:"Mă pricep? Dar ceilalți?",
+     perceptie:"Gânduri: fapte, date, logică",
+     forte:"Logic, responsabil, organizat",
+     nevoi:"Recunoașterea muncii și structurarea timpului",
+     canal:"Interogativ: întrebări și informații clare",
+     stil:"Democratic: consultă și decide pe argumente",
+     mediu:"Unu-la-unu sau singur",
+     comunicare:"Vino cu date și o structură. Întreabă: „Ce crezi? Ce opțiuni avem?” Respectă agenda și termenele.",
+     hrana:"Un plan clar, liste bifate, recunoaștere concretă pentru rezultate („analiza ta a salvat proiectul”).",
+     scenariu:"„Până când”: nu se poate bucura de nimic până nu termină tot.",
+     stres:["„Fii perfect”: explică prea mult, nu deleagă, vorbește în fraze lungi, cu paranteze.",
+            "Supracontrolează și devine critic cu cei care „nu gândesc clar”, mai ales pe bani, timp și ordine. Mască: Atacatorul.",
+            "Se simte deprimat și fără valoare."]},
+  P:{slug:"perseverent",name:"Perseverent",en:"Persister",pct:10,ask:"Se poate avea încredere în mine?",
+     perceptie:"Opinii: valori, convingeri, judecăți",
+     forte:"Dedicat, observator, conștiincios",
+     nevoi:"Recunoașterea convingerilor și a muncii",
+     canal:"Interogativ: schimb de opinii, întrebări despre ce crede",
+     stil:"Democratic: vrea să fie consultat",
+     mediu:"Unu-la-unu",
+     comunicare:"Întreabă-l ce părere are și ascultă până la capăt. Fii consecvent: încrederea lui se câștigă în timp.",
+     hrana:"Să fie întrebat ce crede, să lucreze pentru o cauză în care crede, recunoaștere pentru angajament.",
+     stres:["„Fii perfect” față de ceilalți: vede ce lipsește, nu ce merge bine.",
+            "Își impune punctul de vedere, ține morală, nu mai ascultă și devine suspicios. Mască: Atacatorul.",
+            "Se simte trădat și renunță la ceilalți."]},
+  V:{slug:"visator",name:"Visător",en:"Imaginer",pct:10,ask:"Mă vrea cineva în preajmă?",
+     perceptie:"Inacțiuni: reflecție, imaginație",
+     forte:"Imaginativ, reflexiv, calm",
+     nevoi:"Solitudine: timp și spațiu doar pentru sine",
+     canal:"Directiv: cereri scurte și clare",
+     stil:"Autocratic: sarcină clară, apoi spațiu",
+     mediu:"Singur",
+     comunicare:"Dă-i o cerere scurtă și precisă („Te rog termină capitolul 2 până vineri.”), apoi lasă-i spațiu.",
+     hrana:"Timp singur în fiecare zi, liniște, o plimbare fără telefon, lucru fără întreruperi.",
+     stres:["„Fii puternic”: se retrage, așteaptă să i se spună ce să facă, nu cere ajutor.",
+            "Devine pasiv, amână, începe lucruri pe care nu le termină. Mască: Victima.",
+            "Se izolează complet."]},
+  R:{slug:"rebel",name:"Rebel",en:"Rebel",pct:20,ask:"Mă acceptă lumea așa cum sunt?",
+     perceptie:"Reacții: îmi place sau nu-mi place",
+     forte:"Spontan, creativ, jucăuș",
+     nevoi:"Contact: stimulare, joacă, umor",
+     canal:"Emotiv: energic, jucăuș, cu umor",
+     stil:"Laissez-faire: libertate și spațiu de joacă",
+     mediu:"Grup",
+     comunicare:"Pune energie și umor în mesaj. „Uau, arată super! Hai s-o facem!” merge mai bine decât un memo.",
+     hrana:"Muzică, glume, activități noi, oameni cu energie, pauze de joacă.",
+     stres:["„Încearcă din greu”: pare că nu înțelege, răspunde cu „Ce?”, complică lucrurile.",
+            "Dă vina pe alții, răspunde cu „da, dar…”, devine negativ. Mască: Acuzatorul.",
+            "Se simte respins și se răzbună."]},
+  M:{slug:"promotor",name:"Promotor",en:"Promoter",pct:5,ask:"Simt că trăiesc?",
+     perceptie:"Acțiuni: ce se întâmplă acum",
+     forte:"Adaptabil, convingător, fermecător",
+     nevoi:"Incidență: acțiune intensă, provocare, risc",
+     canal:"Directiv: scurt, la obiect, fără ocolișuri",
+     stil:"Autocratic: direct, orientat pe rezultat",
+     mediu:"Grup la grup: trece de la un cerc la altul",
+     comunicare:"Spune direct ce vrei și ce câștigă. Scurt, rapid, cu o provocare: „Ai 48 de ore. Poți?”",
+     hrana:"Sport intens, competiție, proiecte cu termen scurt, ceva nou și riscant, făcut cu cap.",
+     stres:["„Fii puternic” față de ceilalți: îi lasă să se descurce singuri.",
+            "Manipulează, încalcă regulile, provoacă drame și certuri. Mască: Acuzatorul.",
+            "Îi abandonează pe ceilalți."]}
+};
+
+const PART1 = {
+  E:["Simt repede cum se simt cei din jur, chiar dacă nu spune nimeni nimic.",
+     "Pentru mine contează mai mult cum se simt oamenii decât cât de repede iese treaba.",
+     "Mă încarcă un loc cald și plăcut: lumină bună, muzică, ceva bun de mâncat.",
+     "Îmi dă energie când cineva mă apreciază pentru cine sunt, nu doar pentru ce fac.",
+     "Lucrez cel mai bine într-o echipă unită, în care oamenii țin unii la alții."],
+  G:["Înainte să decid, vreau să am faptele și datele pe masă.",
+     "Îmi place să planific și să știu exact cine ce face și până când.",
+     "Mă motivează când cineva îmi recunoaște competența și munca bine făcută.",
+     "Prefer discuțiile structurate, cu întrebări clare și informații precise.",
+     "Mă deranjează ședințele fără agendă și timpul pierdut."],
+  P:["Am convingeri ferme și le apăr chiar și când nu sunt populare.",
+     "Observ repede când ceva nu e făcut cum trebuie sau nu e corect.",
+     "Încrederea mea se câștigă în timp, prin consecvență și integritate.",
+     "Vreau ca părerile mele să fie ascultate și luate în serios.",
+     "Duc până la capăt lucrurile în care cred, chiar dacă durează."],
+  V:["Am nevoie regulat de timp doar pentru mine, fără întreruperi.",
+     "Îmi imaginez ușor idei și scenarii la care alții nu se gândesc.",
+     "Lucrez bine când primesc o sarcină clară și apoi mă lasă lumea în pace.",
+     "Prefer să observ și să reflectez înainte să intru într-o discuție.",
+     "Îmi păstrez calmul când în jurul meu e agitație."],
+  R:["Știu imediat dacă ceva îmi place sau nu și reacționez pe loc.",
+     "Mă plictisesc repede de rutină și caut ceva nou și amuzant.",
+     "Umorul și joaca mă ajută să lucrez mai bine, nu mă distrag.",
+     "Am nevoie de oameni în jur cu care să schimb energie și glume.",
+     "Găsesc soluții creative acolo unde regulile spun că nu se poate."],
+  M:["Prefer să acționez repede decât să analizez mult.",
+     "Îmi plac provocările, riscul și situațiile cu miză mare.",
+     "Conving ușor oamenii și mă adaptez repede la orice context.",
+     "Vreau să văd rezultatul acum, nu peste câteva luni.",
+     "Mă simt viu când e acțiune, presiune și totul se mișcă repede."]
+};
+const PART2 = {
+  E:["Am avut nevoie, mai mult ca de obicei, să simt că cei apropiați mă apreciază și au grijă de mine.",
+     "Sub presiune, am încercat să le fac tuturor pe plac și am greșit din neatenție."],
+  G:["Am simțit nevoia de ordine, de un program clar și de rezultate concrete.",
+     "Sub presiune, am vrut să controlez tot și m-au enervat cei care nu gândesc clar."],
+  P:["Am avut nevoie să fiu respectat pentru valorile și convingerile mele.",
+     "Sub presiune, am văzut mai ales ce fac ceilalți greșit și am ținut morală."],
+  V:["Mi-am dorit mai mult timp doar pentru mine, departe de oameni.",
+     "Sub presiune, m-am retras și am amânat lucruri pe care știam că trebuie să le fac."],
+  R:["Am simțit nevoia de distracție, de joacă și de oameni plini de energie.",
+     "Sub presiune, am dat vina pe alții sau pe context când ceva n-a mers."],
+  M:["Am căutat provocări noi, adrenalină și senzații tari.",
+     "Sub presiune, am forțat regulile ca să iasă cum vreau."]
+};
+/* interleave: every round of six visits each type once, in a varied order */
+const ROUNDS1 = [["G","E","M","V","R","P"],["P","R","E","G","M","V"],["V","M","G","R","P","E"],["E","P","V","M","G","R"],["R","G","P","E","V","M"]];
+const ROUNDS2 = [["E","V","G","R","P","M"],["M","P","R","G","V","E"]];
+const QUESTIONS = [];
+ROUNDS1.forEach((r,i)=>r.forEach(t=>QUESTIONS.push({part:1,t,text:PART1[t][i]})));
+ROUNDS2.forEach((r,i)=>r.forEach(t=>QUESTIONS.push({part:2,t,text:PART2[t][i]})));
+
+/* ---------- data: PCM Alin, read from the JSON block (original wording, codes T/Pe/H/Im/Re/Pr) ---------- */
+const ALIN_DATA = JSON.parse(document.getElementById("pcm-alin-data").textContent);
+const ALIN = ALIN_DATA.items.map(it=>{
+  const o = {}; Object.keys(it.options).forEach(c=>{ o[ALIN_DATA.codes[c]] = it.options[c]; });
+  return {q:it.q, o};
+});
+const ALIN_TIE = ALIN_DATA.scoring.tieOrder.map(c=>ALIN_DATA.codes[c]);
+const ALIN_PTS = ALIN_DATA.scoring.points;
+const ALIN_MIN = ALIN_DATA.scoring.minPerType, ALIN_MAX = ALIN_DATA.scoring.maxPerType, ALIN_TOTAL = ALIN_DATA.scoring.total;
+
+const VARIANTS = {
+  complet:{key:"complet", label:"Testul complet", kind:"likert", n:QUESTIONS.length, split:30,
+    start:"Începe partea I",
+    intro:"Vei citi <strong>42 de afirmații</strong>. Pentru fiecare, alege cât de mult ți se potrivește, de la <strong>1 (deloc)</strong> la <strong>5 (întru totul)</strong>. Răspunsurile rămân doar în browserul tău.",
+    stats:[["30","afirmații despre cum funcționezi de obicei"],["12","afirmații despre ultimele două-trei luni"],["1–5","tastele 1–5 răspund, săgeata stânga revine"]],
+    inter:"Faza se schimbă în timp, așa că aici contează ce ai simțit și cum ai reacționat recent, inclusiv sub presiune. Sunt 12 afirmații.",
+    hint:"Tastele 1–5 • ← înapoi"},
+  alin:{key:"alin", label:"PCM Alin", kind:"rank", n:ALIN.length, split:ALIN.length,
+    start:"Începe PCM Alin",
+    intro:"<strong>PCM Alin</strong> are <strong>18 situații</strong>, fiecare cu șase reacții. Ordonează-le pe toate: atinge întâi varianta cea mai potrivită pentru tine, apoi următoarea, până la ultima. Atinge din nou o variantă ca s-o scoți din ordine. Răspunsurile rămân doar în browserul tău.",
+    stats:[["18","situații din testul original"],["6→1","puncte pentru locurile 1–6"],["1–6","tastele aleg varianta, Enter continuă"]],
+    inter:"",
+    hint:"1–6 alege • Enter continuă • ← înapoi"}
+};
+
+/* ---------- scoring (pure) ---------- */
+function blank(){ const o={}; ORDER.forEach(k=>{o[k]=0;}); return o; }
+function sumsComplet(answers){
+  const base=blank(), phase=blank();
+  QUESTIONS.forEach((q,i)=>{ const v=answers[i]; if(!v) return; (q.part===1?base:phase)[q.t]+=v; });
+  return {base,phase};
+}
+function sumsAlin(rankings){
+  const base=blank();
+  rankings.forEach(r=>{ if(!Array.isArray(r) || r.length!==6) return; r.forEach((k,i)=>{ base[k]+=ALIN_PTS[i]; }); });
+  return {base, phase:null};
+}
+function compute(variant, base, phase){
+  if(variant==="alin"){
+    // original rule: descending score; ties keep the order T, Pe, H, Im, Re, Pr (stable sort)
+    const floors = ALIN_TIE.slice().sort((a,b)=>base[b]-base[a]);
+    return {variant, base, phase:null, floors, baseType:floors[0], phaseType:null, close: base[floors[0]]-base[floors[1]]<=2};
+  }
+  const floors = ORDER.slice().sort((a,b)=> base[b]-base[a] || phase[b]-phase[a] || ORDER.indexOf(a)-ORDER.indexOf(b));
+  const pmax = Math.max.apply(null, ORDER.map(k=>phase[k]));
+  const phaseType = floors.find(k=>phase[k]===pmax);
+  return {variant, base, phase, floors, baseType:floors[0], phaseType, close: base[floors[0]]-base[floors[1]]<=1};
+}
+function scoreOf(variant, raw){ return variant==="alin" ? raw : Math.round((raw-5)/20*100); }
+function fillOf(variant, raw){ return variant==="alin" ? Math.max(raw/ALIN_MAX*100, ALIN_DATA.scoring.minFill*100) : Math.max(Math.round((raw-5)/20*100), 1.5); }
+
+const B36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+function group(s){ return s.slice(0,4)+"-"+s.slice(4,8)+"-"+s.slice(8,12)+"-"+s.slice(12); }
+function encode(res){
+  if(res.variant==="alin"){
+    const body = ORDER.map(k=>{ const v=res.base[k]-ALIN_MIN; return B36[Math.floor(v/36)]+B36[v%36]; }).join("");
+    let chk=11; body.split("").forEach((c,i)=>{ chk=(chk+B36.indexOf(c)*(i+7))%36; });
+    return group("A"+body+B36[chk]);
+  }
+  const vals = ORDER.map(k=>res.base[k]-5).concat(ORDER.map(k=>res.phase[k]-2));
+  let chk=0; vals.forEach((v,i)=>{chk=(chk+v*(i+3))%36;});
+  return group(vals.map(v=>B36[v]).join("")+B36[chk]);
+}
+function decode(str){
+  const s = String(str||"").toUpperCase().replace(/[^0-9A-Z]/g,"");
+  if(s.length===14 && s[0]==="A"){
+    const body = s.slice(1,13);
+    let chk=11; body.split("").forEach((c,i)=>{ chk=(chk+B36.indexOf(c)*(i+7))%36; });
+    if(B36[chk]!==s[13]) return null;
+    const base={}; let sum=0;
+    for(let i=0;i<6;i++){
+      const v = B36.indexOf(body[2*i])*36 + B36.indexOf(body[2*i+1]);
+      if(v<0 || v>ALIN_MAX-ALIN_MIN) return null;
+      base[ORDER[i]] = v+ALIN_MIN; sum += v+ALIN_MIN;
+    }
+    if(sum!==ALIN_TOTAL) return null;
+    return {variant:"alin", base, phase:null};
+  }
+  if(s.length!==13) return null;
+  const vals = s.slice(0,12).split("").map(c=>B36.indexOf(c));
+  if(vals.some((v,i)=> v<0 || (i<6 ? v>20 : v>8))) return null;
+  let chk=0; vals.forEach((v,i)=>{chk=(chk+v*(i+3))%36;});
+  if(B36[chk]!==s[12]) return null;
+  const base={}, phase={};
+  ORDER.forEach((k,i)=>{ base[k]=vals[i]+5; phase[k]=vals[i+6]+2; });
+  return {variant:"complet", base, phase};
+}
+window.__condominiul = {QUESTIONS, ALIN, ALIN_DATA, VARIANTS, sumsComplet, sumsAlin, compute, encode, decode, scoreOf};
+
+/* ---------- state ---------- */
+const KEY = "condominiul.v2";
+function shuffled(){ const a=ORDER.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function freshRun(v){
+  const V = VARIANTS[v];
+  if(V.kind==="rank") return {answers:Array.from({length:V.n},()=>[]), perms:Array.from({length:V.n},shuffled), idx:0, stage:"intro"};
+  return {answers:Array(V.n).fill(0), idx:0, stage:"intro"};
+}
+let state = {variant:"complet", runs:{complet:freshRun("complet"), alin:freshRun("alin")}, result:null, resultDate:null, fromCode:false};
+function load(){
+  try{
+    const s = JSON.parse(localStorage.getItem(KEY)||"null");
+    if(!s || !s.runs) return;
+    const c=s.runs.complet, a=s.runs.alin;
+    if(c && Array.isArray(c.answers) && c.answers.length===VARIANTS.complet.n) state.runs.complet=c;
+    if(a && Array.isArray(a.answers) && a.answers.length===VARIANTS.alin.n && Array.isArray(a.perms) && a.perms.length===VARIANTS.alin.n) state.runs.alin=a;
+    if(VARIANTS[s.variant]) state.variant=s.variant;
+    if(s.result && VARIANTS[s.result.variant] && s.result.base){ state.result=s.result; state.resultDate=s.resultDate; state.fromCode=!!s.fromCode; }
+  }catch(e){}
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+const $ = id => document.getElementById(id);
+const run = () => state.runs[state.variant];
+const VV = () => VARIANTS[state.variant];
+const done = (v,a) => VARIANTS[v].kind==="rank" ? (Array.isArray(a) && a.length===6) : !!a;
+const views = {intro:$("introView"), question:$("questionView"), inter:$("interView"), done:$("doneView")};
+function show(stage){ Object.keys(views).forEach(k=>views[k].hidden = (k!==stage)); }
+function pad(n){ return String(n).padStart(2,"0"); }
+
+function updateBar(){
+  const r=run(), V=VV();
+  const answered = r.answers.filter(a=>done(V.key,a)).length;
+  $("progressFill").style.width = (answered/V.n*100)+"%";
+  if(r.stage==="question"){
+    $("counter").textContent = pad(r.idx+1)+" / "+V.n;
+    $("partLabel").textContent = V.kind==="rank" ? "PCM Alin • Situația "+(r.idx+1) : (QUESTIONS[r.idx].part===1 ? "Partea I • Baza" : "Partea II • Faza");
+  } else if(r.stage==="inter"){ $("counter").textContent = pad(V.split)+" / "+V.n; $("partLabel").textContent = "Pauză"; }
+  else if(r.stage==="done"){ $("counter").textContent = V.n+" / "+V.n; $("partLabel").textContent = "Complet"; }
+  else { $("counter").textContent = "00 / "+V.n; $("partLabel").textContent = V.kind==="rank" ? "PCM Alin • Pregătire" : "Pregătire"; }
+}
+function renderIntro(){
+  const r=run(), V=VV();
+  $("introText").innerHTML = V.intro;
+  $("introStats").innerHTML = V.stats.map(s=>'<div><b>'+s[0]+'</b><span>'+s[1]+'</span></div>').join("");
+  const answered = r.answers.filter(a=>done(V.key,a)).length;
+  $("startBtn").textContent = answered>0 ? "Continuă de unde ai rămas" : V.start;
+}
+function renderQuestion(animate){
+  const r=run(), V=VV(), el=$("qText");
+  $("keyHint").textContent = V.hint;
+  if(V.kind==="likert"){
+    const q = QUESTIONS[r.idx];
+    $("qKicker").textContent = q.part===1 ? "Partea I • De obicei, eu…" : "Partea II • În ultimele 2–3 luni";
+    el.textContent = q.text; el.classList.remove("short");
+    $("scaleWrap").hidden = false; $("rank").hidden = true;
+    const cur = r.answers[r.idx];
+    document.querySelectorAll("#scale button").forEach(b=>b.setAttribute("aria-pressed", String(Number(b.dataset.v)===cur)));
+  } else {
+    const item = ALIN[r.idx], arr = r.answers[r.idx], perm = r.perms[r.idx];
+    $("qKicker").textContent = "Situația "+(r.idx+1)+" din "+V.n+" • de la cea mai potrivită la cea mai puțin";
+    el.textContent = item.q; el.classList.add("short");
+    $("scaleWrap").hidden = true; $("rank").hidden = false;
+    $("rankList").innerHTML = perm.map((k,i)=>{
+      const pos = arr.indexOf(k)+1;
+      return '<button type="button" data-t="'+k+'" aria-pressed="'+(pos>0)+'" aria-label="'+(pos>0?'Locul '+pos+': ':'')+esc(item.o[k])+'">'+
+        '<i>'+(pos>0?pos:(i+1))+'</i><span>'+esc(item.o[k])+'</span></button>';
+    }).join("");
+    $("rankStatus").textContent = arr.length<6 ? ("Ordonate "+arr.length+" din 6 • urmează locul "+(arr.length+1)) : "Ordinea e completă.";
+    $("rankNext").disabled = arr.length<6;
+    $("rankNext").textContent = r.idx===V.n-1 ? "Vezi rezultatul" : "Continuă";
+    $("rankClear").disabled = arr.length===0;
+  }
+  if(animate){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
+  $("backBtn").disabled = r.idx===0;
+  updateBar();
+}
+function renderStage(animate){
+  const r=run(), V=VV();
+  show(r.stage);
+  if(r.stage==="intro") renderIntro();
+  if(r.stage==="question") renderQuestion(animate);
+  if(r.stage==="inter"){ $("interKicker").textContent = "Partea I gata • "+V.split+" din "+V.n; $("interText").textContent = V.inter; }
+  if(r.stage==="done"){ $("doneKicker").textContent = "Gata • "+V.n+" din "+V.n; }
+  document.querySelectorAll('[role="tab"]').forEach(t=>{ const on=t.dataset.variant===state.variant; t.setAttribute("aria-selected",String(on)); t.tabIndex = on?0:-1; });
+  updateBar();
+}
+function goStage(stage){ run().stage=stage; renderStage(true); save(); }
+function setVariant(v){ if(!VARIANTS[v]) return; state.variant=v; renderStage(false); save(); }
+
+let advancing = false;
+function answer(v){
+  const r=run(), V=VV(), vk=state.variant;
+  if(r.stage!=="question" || V.kind!=="likert" || advancing) return;
+  r.answers[r.idx]=v; renderQuestion(false); save();
+  advancing = true;
+  setTimeout(()=>{
+    advancing = false;
+    if(state.variant!==vk) return;
+    if(r.idx===V.split-1 && V.split<V.n){ r.idx=V.split; goStage("inter"); return; }
+    if(r.idx===V.n-1){ finish(); return; }
+    r.idx++; renderQuestion(true); save();
+  }, 170);
+}
+function rankToggle(k){
+  const r=run(); if(r.stage!=="question" || VV().kind!=="rank") return;
+  const arr=r.answers[r.idx], i=arr.indexOf(k);
+  if(i>=0) arr.splice(i,1); else if(arr.length<6) arr.push(k);
+  renderQuestion(false); save();
+}
+function rankNext(){
+  const r=run(), V=VV(); if(r.stage!=="question" || V.kind!=="rank" || r.answers[r.idx].length<6) return;
+  if(r.idx===V.n-1){ finish(); return; }
+  r.idx++; renderQuestion(true); save();
+}
+function back(){
+  const r=run(), V=VV();
+  if(r.stage==="inter"){ r.idx=V.split-1; goStage("question"); return; }
+  if(r.stage!=="question" || r.idx===0) return;
+  r.idx--; renderQuestion(true); save();
+}
+function finish(){
+  const r=run(), V=VV();
+  const miss = r.answers.findIndex(a=>!done(V.key,a));
+  if(miss>=0){ r.idx=miss; goStage("question"); return; }
+  const s = V.kind==="rank" ? sumsAlin(r.answers) : sumsComplet(r.answers);
+  state.result = {variant:V.key, base:s.base, phase:s.phase};
+  state.resultDate = new Date().toISOString();
+  state.fromCode = false;
+  goStage("done");
+  renderResult();
+  setTimeout(()=>{ $("rezultat").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); }, 380);
+}
+function resetRun(){ state.runs[state.variant]=freshRun(state.variant); goStage("intro"); }
+
+/* ---------- result rendering ---------- */
+const EXAMPLE = {variant:"complet", base:{E:13,G:23,P:18,V:9,R:11,M:20}, phase:{E:4,G:6,P:5,V:3,R:6,M:9}};
+const LEVELS = ["Parter","Etaj 1","Etaj 2","Etaj 3","Etaj 4","Etaj 5"];
+function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString("ro-RO",{day:"2-digit",month:"2-digit",year:"numeric"}); }catch(e){ return ""; } }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function dl(rows){ return '<dl class="dl">'+rows.map(r=>'<dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>'; }
+function stressList(t){ return '<ul class="stress">'+t.stres.map((s,i)=>'<li><b>Grad '+(i+1)+'</b><span>'+esc(s)+'</span></li>').join("")+'</ul>'; }
+function lc(s){ return s.charAt(0).toLowerCase()+s.slice(1); }
+
+let currentResult = null;
+function renderResult(){
+  const real = !!state.result;
+  const data = real ? state.result : EXAMPLE;
+  const vk = data.variant || "complet";
+  const r = compute(vk, data.base, data.phase);
+  const B = TYPES[r.baseType];
+  const second = TYPES[r.floors[1]];
+  const F = r.phaseType ? TYPES[r.phaseType] : null;
+  $("exampleFlag").hidden = real;
+  $("resEyebrow").textContent = real ? ("Rezultatul "+(state.fromCode?"deschis din cod":"tău")+" • "+VARIANTS[vk].label+" • "+fmtDate(state.resultDate||new Date().toISOString())) : "Rezultat • exemplu";
+  $("resBase").textContent = "Baza: "+B.name;
+  if(vk==="alin"){
+    $("resPhase").textContent = "Al doilea etaj: "+second.name;
+    let note = "Profil orientativ al preferințelor declarate, nu diagnostic. Percepi lumea prin "+lc(B.perceptie.split(":")[0])+", iar următorul tip ca intensitate e "+second.name+". PCM Alin nu măsoară faza.";
+    if(r.close) note += " Primele două etaje sunt aproape la egalitate, așa că citește ambele profiluri.";
+    $("resNote").textContent = note;
+    $("buildingCap").textContent = "Puncte pe tip, între 18 și 108 • totalul e mereu 378 • parterul e baza";
+  } else {
+    $("resPhase").textContent = r.phaseType===r.baseType ? "Faza: tot "+F.name+" (nu ai urcat încă de la bază)" : "Faza: "+F.name;
+    let note = "Percepi lumea prin "+lc(B.perceptie.split(":")[0])+" și ai nevoie acum de "+lc(F.nevoi)+".";
+    if(r.close) note += " Primele două etaje sunt aproape la egalitate ("+B.name+" și "+second.name+"), așa că citește ambele profiluri.";
+    $("resNote").textContent = note;
+    $("buildingCap").textContent = "Scor 0–100 pe tip • parterul e baza • ▮ marchează faza";
+  }
+  $("resCode").textContent = encode(data);
+
+  const floorsEl = $("floors");
+  floorsEl.innerHTML = "";
+  r.floors.slice().reverse().forEach(k=>{
+    const level = r.floors.indexOf(k), t = TYPES[k];
+    const val = scoreOf(vk, data.base[k]), fill = fillOf(vk, data.base[k]);
+    const row = document.createElement("div");
+    row.className = "floor"+(level===0?" is-base":"");
+    row.setAttribute("role","listitem");
+    row.innerHTML = '<div class="lvl">'+LEVELS[level]+(level===0?'<br>baza':'')+'</div>'+
+      '<div><div class="name"><span>'+t.name+'</span>'+(k===r.phaseType?'<span class="tag">▮ Faza</span>':'')+'</div>'+
+      '<div class="track"><div class="fill" style="width:'+fill+'%"></div></div></div>'+
+      '<div class="val">'+val+'</div>';
+    row.setAttribute("aria-label", LEVELS[level]+": "+t.name+", "+(vk==="alin"?val+" puncte din 108":"scor "+val)+(k===r.phaseType?", faza actuală":""));
+    floorsEl.appendChild(row);
+  });
+
+  $("baseProfile").innerHTML =
+    '<div class="eyebrow">Baza • Parterul</div><h3>'+B.name+'</h3><p class="ask">'+esc(B.ask)+'</p>'+
+    dl([["Percepție",B.perceptie],["Puncte forte",B.forte],["Canal",B.canal],["Stil preferat",B.stil],["Mediu",B.mediu]])+
+    '<div class="sub">Cum să-ți vorbească ceilalți</div><p>'+esc(B.comunicare)+'</p>'+
+    (B.scenariu?'<div class="sub">Tipar de eșec</div><p>'+esc(B.scenariu)+'</p>':'');
+  if(vk==="alin"){
+    $("phaseProfile").innerHTML =
+      '<div class="eyebrow">Etaj 1 • Al doilea tip ca intensitate</div><h3>'+second.name+'</h3><p class="ask">'+esc(second.ask)+'</p>'+
+      dl([["Nevoi",second.nevoi],["Canal",second.canal],["Mediu",second.mediu]])+
+      '<div class="sub">Ce îl încarcă</div><p class="feed">'+esc(second.hrana)+'</p>'+
+      '<div class="sub">Despre fază</div><p>PCM Alin estimează doar intensitatea relativă a celor șase tipuri. Faza curentă, adică nevoia care te mișcă acum, o estimează testul complet, în partea a II-a.</p>';
+  } else {
+    $("phaseProfile").innerHTML =
+      '<div class="eyebrow">Faza • Etajul unde locuiești acum</div><h3>'+F.name+'</h3><p class="ask">'+esc(F.ask)+'</p>'+
+      dl([["Nevoia de acum",F.nevoi]])+
+      '<div class="sub">Cum o hrănești</div><p class="feed">'+esc(F.hrana)+'</p>'+
+      '<div class="sub">Semnale de stres, dacă nevoia nu e hrănită</div>'+stressList(F);
+  }
+  $("pdfBtn").disabled = !real;
+  $("pdfBtn").title = real ? "" : "Disponibil după test";
+  currentResult = {r, data, real, vk};
+}
+
+/* ---------- atlas ---------- */
+function renderAtlas(){
+  $("atlasGrid").innerHTML = ORDER.slice().sort((a,b)=>TYPES[b].pct-TYPES[a].pct).map(k=>{
+    const t = TYPES[k];
+    return '<article class="type" id="'+t.slug+'">'+
+      '<div class="pct">~'+t.pct+'%<small>din populație</small></div>'+
+      '<h3>'+t.name+'</h3><div class="en">PCM • '+t.en+'</div>'+
+      '<p class="ask">'+esc(t.ask)+'</p>'+
+      '<div class="quick"><div><span>Percepție</span>'+esc(t.perceptie)+'</div><div><span>Nevoi</span>'+esc(t.nevoi)+'</div><div><span>Canal</span>'+esc(t.canal)+'</div></div>'+
+      '<details data-type="'+k+'"><summary>Profil complet</summary><div class="more">'+
+        dl([["Puncte forte",t.forte],["Stil preferat",t.stil],["Mediu",t.mediu]])+
+        '<p><strong>Cum să-i vorbești.</strong> '+esc(t.comunicare)+'</p>'+
+        '<p><strong>Ce îl încarcă.</strong> '+esc(t.hrana)+'</p>'+
+        (t.scenariu?'<p><strong>Tipar de eșec.</strong> '+esc(t.scenariu)+'</p>':'')+
+        stressList(t)+
+      '</div></details></article>';
+  }).join("");
+}
+
+/* ---------- copy helpers ---------- */
+function flash(el, msg){ el.textContent = msg; clearTimeout(el._t); el._t = setTimeout(()=>{ el.textContent=""; }, 4200); }
+function copyText(text, msgEl, okMsg, selectEl){
+  const fallback = ()=>{
+    if(selectEl){ const range=document.createRange(); range.selectNodeContents(selectEl); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(range); }
+    flash(msgEl, "Copierea automată e blocată aici. Textul e selectat: apasă Ctrl+C (sau ⌘C).");
+  };
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(()=>flash(msgEl, okMsg), fallback);
+    else fallback();
+  }catch(e){ fallback(); }
+}
+function summaryText(){
+  if(!currentResult) return "";
+  const {r, data, vk} = currentResult;
+  const unit = vk==="alin" ? " pct" : "";
+  return ["Condominiul Personalității • "+VARIANTS[vk].label,
+    "Baza: "+TYPES[r.baseType].name+" • "+(r.phaseType ? "Faza: "+TYPES[r.phaseType].name : "Al doilea etaj: "+TYPES[r.floors[1]].name),
+    "Etaje, de la parter în sus: "+r.floors.map(k=>TYPES[k].name+" "+scoreOf(vk,data.base[k])+unit).join(", "),
+    "Cod: "+encode(data)].join("\n");
+}
+
+/* ---------- PDF ---------- */
+const C = {paper:[242,239,230], raised:[247,245,238], ink:[22,20,15], soft:[77,73,63], faint:[138,133,118], rule:[216,210,194], strong:[184,177,157], accent:[176,80,31], warm:[236,231,217]};
+let pdfAssets = null;
+async function fetchB64(url){
+  const res = await fetch(url); if(!res.ok) throw new Error(url);
+  const buf = new Uint8Array(await res.arrayBuffer());
+  let bin=""; for(let i=0;i<buf.length;i+=0x8000) bin += String.fromCharCode.apply(null, buf.subarray(i,i+0x8000));
+  return btoa(bin);
+}
+async function loadPdfAssets(){
+  if(pdfAssets) return pdfAssets;
+  const files = {g4:"fonts/garamond-400.ttf", g4i:"fonts/garamond-400i.ttf", g6:"fonts/garamond-600.ttf", m4:"fonts/plexmono-400.ttf", m5:"fonts/plexmono-500.ttf", img:"temple-pdf.png"};
+  const out = {};
+  await Promise.all(Object.keys(files).map(async k=>{ out[k] = await fetchB64(files[k]); }));
+  pdfAssets = out; return out;
+}
+function hatch(doc, x, y, w, h, step, lw){
+  doc.setLineWidth(lw||0.22);
+  for(let t=-h; t<w; t+=step){
+    const xa=Math.max(x+t,x), xb=Math.min(x+t+h,x+w);
+    if(xa>=xb) continue;
+    doc.line(xa, y+h-(xa-(x+t)), xb, y+h-(xb-(x+t)));
+  }
+}
+function frame(doc){
+  const W=210,H=297;
+  doc.setFillColor.apply(doc,C.paper); doc.rect(0,0,W,H,"F");
+  doc.setDrawColor.apply(doc,C.strong);
+  doc.setLineWidth(0.3); doc.rect(8,8,W-16,H-16);
+  doc.setLineWidth(0.3); doc.rect(9.4,9.4,W-18.8,H-18.8);
+  doc.setFontSize(5.5); doc.setTextColor.apply(doc,C.strong); doc.setFont("Plex","normal");
+  doc.text("+",5.2,6.8); doc.text("+",W-6.8,H-4.6);
+}
+async function buildPdf(){
+  const {r, data, vk} = currentResult;
+  const isAlin = vk==="alin";
+  const A = await loadPdfAssets();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:"mm", format:"a4", compress:true});
+  doc.addFileToVFS("g4.ttf",A.g4); doc.addFont("g4.ttf","Garamond","normal");
+  doc.addFileToVFS("g4i.ttf",A.g4i); doc.addFont("g4i.ttf","Garamond","italic");
+  doc.addFileToVFS("g6.ttf",A.g6); doc.addFont("g6.ttf","Garamond","bold");
+  doc.addFileToVFS("m4.ttf",A.m4); doc.addFont("m4.ttf","Plex","normal");
+  doc.addFileToVFS("m5.ttf",A.m5); doc.addFont("m5.ttf","Plex","bold");
+  doc.setProperties({title:"Condominiul Personalității • "+VARIANTS[vk].label, subject:"Rezultat test PCM", creator:"Condominiul"});
+
+  const B = TYPES[r.baseType], S = TYPES[r.floors[1]], F = r.phaseType ? TYPES[r.phaseType] : null;
+  const code = encode(data);
+  const date = fmtDate(state.resultDate || new Date().toISOString());
+  const L = 20, R = 190, CW = R-L;
+  const mono = (s, x, y, size, color, opts) => { doc.setFont("Plex","normal"); doc.setFontSize(size); doc.setTextColor.apply(doc,color||C.faint); doc.text(String(s).toUpperCase(), x, y, Object.assign({charSpace:0.35}, opts||{})); };
+  const serif = (s, x, y, size, style, color, opts) => { doc.setFont("Garamond", style||"normal"); doc.setFontSize(size); doc.setTextColor.apply(doc,color||C.ink); doc.text(s, x, y, opts||{}); };
+  const para = (s, x, y, w, size, style, color, lh) => { doc.setFont("Garamond", style||"normal"); doc.setFontSize(size); doc.setTextColor.apply(doc,color||C.ink); const lines = doc.splitTextToSize(s, w); doc.text(lines, x, y, {lineHeightFactor: lh||1.32}); return y + lines.length*size*0.3528*(lh||1.32); };
+  const rule = (y, color, lw) => { doc.setDrawColor.apply(doc,color||C.rule); doc.setLineWidth(lw||0.2); doc.line(L, y, R, y); };
+  const dbl = (y) => { doc.setDrawColor.apply(doc,C.strong); doc.setLineWidth(0.3); doc.line(L,y,R,y); doc.line(L,y+1.1,R,y+1.1); };
+  const footer = (n) => { rule(280, C.rule); mono("Condominiul Personalității • "+VARIANTS[vk].label+" • test neoficial inspirat din PCM", L, 285, 6.2); mono("Cod "+code+"  •  "+n+"/2", R, 285, 6.2, C.faint, {align:"right"}); };
+  let y = 0;
+  const field = (label, value) => { rule(y, C.rule); mono(label, L, y+5, 6.2); const ny = para(value, L+38, y+5, CW-38, 10.5, "normal", C.ink, 1.28); y = Math.max(ny, y+7.5)+1.6; };
+
+  /* page 1 */
+  frame(doc);
+  doc.addImage("data:image/png;base64,"+A.img, "PNG", 96, 15, 96, 72, undefined, "FAST");
+  try{
+    doc.setFillColor.apply(doc,C.paper);
+    for(let i=0;i<14;i++){ doc.setGState(new doc.GState({opacity: 0.92 - i*0.065})); doc.rect(96+i*2.2, 15, 2.3, 72, "F"); }
+    doc.setGState(new doc.GState({opacity:1}));
+  }catch(e){}
+  serif("ΓΝΩΘΙ ΣΕΑΥΤΟΝ", L, 22, 9.5, "normal", C.soft, {charSpace:0.9});
+  mono("Rezultat "+VARIANTS[vk].label+" • "+date, L, 27.5, 6.8, C.faint);
+  serif("Baza:", L, 42, 15, "italic", C.soft);
+  serif(B.name, L, 56, 34, "bold");
+  serif(isAlin ? "Al doilea etaj: "+S.name : (r.phaseType===r.baseType ? "Faza: tot "+F.name : "Faza: "+F.name), L, 68, 17, "italic", C.soft);
+  y = 76;
+  y = para(isAlin
+      ? "Percepi lumea prin "+lc(B.perceptie.split(":")[0])+". Profil orientativ al preferințelor declarate, nu diagnostic."
+      : "Percepi lumea prin "+lc(B.perceptie.split(":")[0])+". Acum ai nevoie de "+lc(F.nevoi)+".", L, y, 82, 10.5, "normal", C.soft);
+  if(r.close) para("Primele două etaje sunt aproape egale: citește și profilul "+S.name+".", L, y+1, 82, 10, "italic", C.soft);
+
+  const by = 104;
+  mono("Condominiul tău • de la ultimul etaj la parter", L, by-6, 6.6);
+  doc.setDrawColor.apply(doc,C.strong); doc.setFillColor.apply(doc,C.raised); doc.setLineWidth(0.3);
+  doc.triangle(L, by+10, (L+R)/2, by-1, R, by+10, "FD");
+  doc.setFillColor.apply(doc,C.paper); doc.setDrawColor.apply(doc,C.ink); doc.circle((L+R)/2, by+6, 2.1, "FD");
+  doc.setFillColor.apply(doc,C.ink); doc.circle((L+R)/2, by+6, 0.9, "F");
+  dbl(by+10.6);
+  const rowH = 11.5, top = by+12, tx = L+52, tw = 92;
+  r.floors.slice().reverse().forEach((k,i)=>{
+    const level = r.floors.indexOf(k), t = TYPES[k];
+    const ry = top + i*rowH;
+    if(level===0){ doc.setFillColor.apply(doc,C.warm); doc.rect(L, ry, CW, rowH, "F"); }
+    if(i>0) rule(ry, C.rule);
+    mono(LEVELS[level]+(level===0?" • baza":""), L+2, ry+6.8, 6.2);
+    serif(t.name, L+27, ry+7.2, 12, level===0?"bold":"normal");
+    doc.setDrawColor.apply(doc,C.strong); doc.setFillColor.apply(doc,C.raised); doc.setLineWidth(0.25);
+    doc.rect(tx, ry+3.6, tw, 4.2, "FD");
+    const fw = Math.max(tw*fillOf(vk, data.base[k])/100, 0.8);
+    doc.setDrawColor.apply(doc,C.ink); hatch(doc, tx, ry+3.6, fw, 4.2, level===0?0.9:1.4, 0.24);
+    doc.setLineWidth(0.35); doc.line(tx+fw, ry+3.6, tx+fw, ry+7.8);
+    mono(String(scoreOf(vk, data.base[k])), R-2, ry+7.0, 8.2, C.ink, {align:"right", charSpace:0});
+    if(k===r.phaseType){ doc.setFillColor.apply(doc,C.accent); doc.rect(tx+tw+3.2, ry+4.4, 1.6, 2.6, "F"); mono("faza", tx+tw+5.8, ry+6.9, 5.6, C.accent); }
+  });
+  const bEnd = top + 6*rowH;
+  doc.setDrawColor.apply(doc,C.strong); doc.setLineWidth(0.3); doc.rect(L, top, CW, 6*rowH);
+  doc.setDrawColor.apply(doc,C.strong); hatch(doc, L, bEnd, CW, 3, 1.4, 0.18);
+  mono(isAlin ? "Puncte pe tip între 18 și 108 • totalul e mereu 378 • parterul e baza" : "Scor 0–100 pe tip • parterul e baza • eticheta faza arată faza actuală", L, bEnd+8, 6);
+
+  y = bEnd + 18;
+  mono("Baza • parterul", L, y, 6.8); y += 7;
+  serif(B.name, L, y, 18, "bold"); serif(B.ask, L+doc.getTextWidth(B.name)+4, y, 12, "italic", C.soft); y += 5;
+  field("Percepție", B.perceptie);
+  field("Puncte forte", B.forte);
+  field("Canal", B.canal);
+  field("Stil preferat", B.stil);
+  field("Mediu", B.mediu);
+  footer(1);
+
+  /* page 2 */
+  doc.addPage(); frame(doc);
+  y = 26;
+  mono("Baza • cum să-ți vorbească ceilalți", L, y, 6.8); y += 5;
+  y = para(B.comunicare, L, y+2, CW, 12, "normal", C.ink, 1.3) + 2;
+  if(B.scenariu){ mono("Tipar de eșec", L, y+3, 6.2); y = para(B.scenariu, L+38, y+3, CW-38, 10.5, "italic", C.soft) + 3; }
+  dbl(y+2); y += 13;
+  if(isAlin){
+    mono("Etaj 1 • al doilea tip ca intensitate", L, y, 6.8); y += 7;
+    serif(S.name, L, y, 18, "bold"); serif(S.ask, L+doc.getTextWidth(S.name)+4, y, 12, "italic", C.soft); y += 5;
+    field("Nevoi", S.nevoi);
+    field("Canal", S.canal);
+    field("Ce îl încarcă", S.hrana);
+    rule(y, C.rule);
+    y = para("PCM Alin estimează doar intensitatea relativă a celor șase tipuri, nu faza curentă. Faza o estimează testul complet.", L, y+6, CW, 10, "italic", C.soft) + 2;
+  } else {
+    mono("Faza • etajul unde locuiești acum", L, y, 6.8); y += 7;
+    serif(F.name, L, y, 18, "bold"); serif(F.ask, L+doc.getTextWidth(F.name)+4, y, 12, "italic", C.soft); y += 5;
+    field("Nevoia de acum", F.nevoi);
+    field("Cum o hrănești", F.hrana);
+    y += 4;
+    mono("Semnale de stres, dacă nevoia nu e hrănită", L, y, 6.8); y += 3;
+    F.stres.forEach((s,i)=>{ rule(y, C.rule); mono("Grad "+(i+1), L, y+5, 6.2); y = Math.max(para(s, L+38, y+5, CW-38, 10.5), y+7.5) + 1.6; });
+    rule(y, C.rule);
+  }
+  y += 12;
+  mono("Toate etajele", L, y, 6.8); y += 3;
+  r.floors.forEach((k,i)=>{ const t=TYPES[k]; rule(y, C.rule); mono(LEVELS[i], L, y+5, 6.2); serif(t.name, L+38, y+5.2, 11, i===0?"bold":"normal"); serif(t.perceptie, L+72, y+5.2, 10, "italic", C.soft); mono(String(scoreOf(vk,data.base[k]))+(isAlin?" / 108":""), R, y+5, 7.4, C.ink, {align:"right", charSpace:0}); y += 7.6; });
+  rule(y, C.rule);
+  y += 12;
+  doc.setFillColor.apply(doc,C.raised); doc.setDrawColor.apply(doc,C.strong); doc.setLineWidth(0.3);
+  const boxH = 35; doc.rect(L, y, CW, boxH, "FD"); doc.rect(L+1.1, y+1.1, CW-2.2, boxH-2.2);
+  mono("Despre rezultat", L+6, y+8, 6.4);
+  para(isAlin
+      ? "PCM Alin reia cele 18 situații ale testului „Structura ta de personalitate”: ordonezi șase reacții, locurile 1–6 primesc 6–1 puncte. E un instrument informal inspirat din Process Communication Model (Taibi Kahler), nu un profil PCM certificat și nici diagnostic."
+      : "Test neoficial, cu afirmații originale, inspirat din Process Communication Model (Taibi Kahler). Nu e inventarul oficial și nu e un diagnostic. Modelul are validare independentă limitată; folosește-l ca limbaj pentru comunicare. Codul de mai jos redeschide rezultatul în pagina testului.",
+    L+6, y+13.5, CW-12, 9.2, "normal", C.soft, 1.25);
+  mono("Cod rezultat  "+code, L+6, y+boxH-5, 7.6, C.ink);
+  footer(2);
+  return doc.output("blob");
+}
+window.__condominiul.buildPdf = () => buildPdf();
+
+let downloads = null;
+async function onPdf(){
+  if(!currentResult || !currentResult.real) return;
+  const btn = $("pdfBtn"), msg = $("actionMsg");
+  btn.disabled = true; const label = btn.textContent; btn.textContent = "Se pregătește…";
+  try{
+    const blob = await buildPdf();
+    const name = "condominiul-"+(currentResult.vk==="alin"?"alin-":"")+TYPES[currentResult.r.baseType].slug+"-"+(state.resultDate||new Date().toISOString()).slice(0,10)+".pdf";
+    if(!downloads){ flash(msg, "Descărcarea nu e disponibilă în această vizualizare. Deschide pagina în claude.ai."); return; }
+    await downloads.save({filename:name, data:blob});
+    flash(msg, "PDF salvat: "+name);
+  }catch(e){
+    const code = e && e.code;
+    if(code==="declined") flash(msg, "Descărcare anulată.");
+    else if(code==="rate_limited") flash(msg, "O fereastră de salvare e deja deschisă. Încearcă din nou peste câteva secunde.");
+    else if(code && code!=="bad_request"){ flash(msg, "Descărcarea nu e disponibilă aici."); btn.hidden = true; }
+    else flash(msg, "PDF-ul nu s-a putut genera. Reîncarcă pagina și încearcă din nou.");
+  }finally{ btn.disabled = !(currentResult && currentResult.real); btn.textContent = label; }
+}
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("#scale button").forEach(b=>b.addEventListener("click", ()=>answer(Number(b.dataset.v))));
+$("rankList").addEventListener("click", e=>{ const b=e.target.closest("button[data-t]"); if(b) rankToggle(b.dataset.t); });
+$("rankNext").addEventListener("click", rankNext);
+$("rankClear").addEventListener("click", ()=>{ const r=run(); r.answers[r.idx]=[]; renderQuestion(false); save(); });
+$("startBtn").addEventListener("click", ()=>{
+  const r=run(), V=VV();
+  const next = r.answers.findIndex(a=>!done(V.key,a));
+  if(next<0){ finish(); return; }
+  r.idx = next;
+  goStage(next===V.split && V.split<V.n ? "inter" : "question");
+});
+$("part2Btn").addEventListener("click", ()=>{ run().idx=VV().split; goStage("question"); });
+$("backBtn").addEventListener("click", back);
+$("resetBtn").addEventListener("click", ()=>{ const b=$("resetBtn"); if(b.dataset.armed){ delete b.dataset.armed; b.textContent="Ia-o de la capăt"; resetRun(); } else { b.dataset.armed="1"; b.textContent="Sigur? Apasă iar"; setTimeout(()=>{ if(b.dataset.armed){ delete b.dataset.armed; b.textContent="Ia-o de la capăt"; } }, 3500); } });
+$("redoBtn").addEventListener("click", ()=>{ resetRun(); $("test").scrollIntoView(); });
+document.querySelectorAll('[role="tab"]').forEach(t=>{
+  t.addEventListener("click", ()=>setVariant(t.dataset.variant));
+  t.addEventListener("keydown", e=>{
+    if(e.key!=="ArrowLeft" && e.key!=="ArrowRight") return;
+    e.preventDefault();
+    const tabs=[...document.querySelectorAll('[role="tab"]')], i=tabs.indexOf(t), n=tabs[(i+(e.key==="ArrowRight"?1:tabs.length-1))%tabs.length];
+    setVariant(n.dataset.variant); n.focus();
+  });
+});
+document.querySelectorAll("[data-start]").forEach(a=>a.addEventListener("click", ()=>{
+  setVariant(a.dataset.start);
+  if(run().stage==="intro") setTimeout(()=>$("startBtn").focus({preventScroll:true}), 400);
+}));
+document.addEventListener("keydown", e=>{
+  if(run().stage!=="question" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const tg = e.target || {}; const tag = tg.tagName || "";
+  if(tag==="INPUT" || tag==="TEXTAREA" || (tg.closest && tg.closest('[role="tablist"]'))) return;
+  if(VV().kind==="likert"){
+    if(/^[1-5]$/.test(e.key)){ e.preventDefault(); answer(Number(e.key)); }
+    else if(e.key==="ArrowLeft" || e.key==="Backspace"){ e.preventDefault(); back(); }
+    return;
+  }
+  const r=run();
+  if(/^[1-6]$/.test(e.key)){ e.preventDefault(); rankToggle(r.perms[r.idx][Number(e.key)-1]); }
+  else if(e.key==="Enter" && tag!=="BUTTON" && tag!=="A"){ e.preventDefault(); rankNext(); }
+  else if(e.key==="Backspace"){ e.preventDefault(); const arr=r.answers[r.idx]; if(arr.length){ arr.pop(); renderQuestion(false); save(); } else back(); }
+  else if(e.key==="ArrowLeft"){ e.preventDefault(); back(); }
+});
+$("codeForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  const d = decode($("codeInput").value);
+  if(!d){ flash($("codeMsg"), "Codul nu e valid. Testul complet are 13 caractere (7FB3-K2D0-6854-Q), PCM Alin 14 și începe cu A."); return; }
+  state.result = d; state.fromCode = true; state.resultDate = new Date().toISOString(); save();
+  renderResult(); flash($("codeMsg"), "Rezultat deschis mai jos.");
+  $("rezultat").scrollIntoView({behavior:"smooth"});
+});
+$("copyCodeBtn").addEventListener("click", ()=>copyText($("resCode").textContent, $("actionMsg"), "Cod copiat.", $("resCode")));
+$("copySumBtn").addEventListener("click", ()=>copyText(summaryText(), $("actionMsg"), "Rezumat copiat."));
+$("pdfBtn").addEventListener("click", onPdf);
+
+function syncNav(){
+  const ids = ["test","rezultat","atlas","despre"]; let cur = "";
+  ids.forEach(id=>{ const el=$(id); if(el && el.getBoundingClientRect().top < innerHeight*0.4) cur=id; });
+  document.querySelectorAll("[data-nav]").forEach(a=>a.setAttribute("aria-current", String(a.dataset.nav===cur)));
+}
+addEventListener("scroll", syncNav, {passive:true});
+
+function openFromHash(){
+  const h = (location.hash||"").slice(1);
+  if(h==="alin"){ setVariant("alin"); $("test").scrollIntoView(); return; }
+  const k = ORDER.find(x=>TYPES[x].slug===h);
+  if(k){ const d=document.querySelector('details[data-type="'+k+'"]'); if(d) d.open=true; const el=$(h); if(el) el.scrollIntoView(); }
+}
+
+/* boot */
+load();
+renderAtlas();
+renderResult();
+renderStage(false);
+openFromHash(); addEventListener("hashchange", openFromHash);
+syncNav();
+
+if(window.claude && typeof window.claude.use==="function"){
+  window.claude.use("downloads").then(ns=>{ downloads = ns; $("pdfBtn").hidden = !ns; }).catch(()=>{});
+} else {
+  // standalone copy (GitHub Pages, local server): the browser saves the file itself
+  downloads = {save: async ({filename, data})=>{
+    const url = URL.createObjectURL(data), a = document.createElement("a");
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 5000);
+    return {status:"saved"};
+  }};
+  $("pdfBtn").hidden = false;
+}
+})();
+</script>
+</body></html>

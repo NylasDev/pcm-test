@@ -1,0 +1,15 @@
+{
+  "name": "pcm-test",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Test de personalitate PCM în română: testul complet (42) și PCM Alin (18 situații), cu export PDF.",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "test": "node tests/run.js"
+  },
+  "devDependencies": {
+    "jsdom": "24.1.3",
+    "jspdf": "2.5.1"
+  },
+  "license": "MIT"
+}
